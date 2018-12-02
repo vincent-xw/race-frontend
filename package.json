@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "element-ui": "^2.4.11",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "pug-plain-loader": "^1.0.0",
     "sass": "^1.15.1",
     "vue": "^2.5.17",
     "vue-router": "^3.0.2"
