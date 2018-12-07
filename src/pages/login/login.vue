@@ -28,7 +28,8 @@
                     )
                 el-form-item(align='center')
                     el-button(
-                        type='primary'
+                        type='primary',
+                        @click='login'
                     ) 登录
         el-col(
             :span='24',
@@ -44,7 +45,12 @@ export default {
         };
     },
     methods: {
-
+        login() {
+            this.$axios.get('/api/front/index').then(res => {
+                console.log(res);
+                
+            });
+        }
     }
 };
 </script>
