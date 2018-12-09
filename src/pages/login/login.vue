@@ -17,12 +17,12 @@
             )
                 el-form-item()
                     el-input(
-                        :model='form.username',
+                        v-model='form.username',
                         placeholder='请输入用户名' 
                     )
                 el-form-item()
                     el-input(
-                        :model='form.password',
+                        v-model='form.password',
                         placeholder='请输入密码',
                         type='password'
                     )
@@ -44,9 +44,15 @@ export default {
             form: {}
         };
     },
+    created() {
+    },
     methods: {
         login() {
-            this.$axios.get('/api/front/index').then(res => {
+            let data = {
+                username: this.form.username,
+                password: this.form.password
+            };
+            this.$axios.post('/api/front/login', data).then(res => {
                 console.log(res);
                 
             });
