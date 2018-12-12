@@ -23,5 +23,75 @@ export default [
         callback: (url, type, body) => {
             console.log(url);
         }
+    },
+  {
+    url: /\/api\/front\/login/,
+    callback: (url, type, body) => {
+      return {
+        status: 0,
+        msg: '登陆成功'
+      };
     }
+  },
+  {
+    url: /\/api\/front\/league\/list/,
+    callback: (url, type, body) => {
+      return {
+        status: 0,
+        data: [
+          {
+            id: 0,
+            name: '马来西亚',
+            remark: '超高赔率，超多机会'
+          },
+          {
+            id: 1,
+            name: '澳大利亚',
+            remark: '超高赔率，超多机会'
+          },
+          {
+            id: 2,
+            name: '香港',
+            remark: '超高赔率，超多机会'
+          },
+          {
+            id: 3,
+            name: '新加坡',
+            remark: '超高赔率，超多机会'
+          }
+        ]
+
+      };
+    }
+  },
+  {
+    url: /\/api\/front\/race\/info/,
+    callback: (url, type, body) => {
+      return {
+        status: 0,
+        data: [
+          {
+            id: 0,
+            raceName: '哈哈',
+            raceTime: '123',
+          },
+          {
+            id: 1,
+            raceName: '哈哈1',
+            raceTime: '124',
+          },
+          {
+            id: 2,
+            raceName: '哈哈2',
+            raceTime: '125',
+          },
+          {
+            id: 3,
+            raceName: '哈哈3',
+            raceTime: '126',
+          },
+        ]
+      };
+    }
+  },
 ];
