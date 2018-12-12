@@ -9,6 +9,7 @@
             h3 请选择比赛然后进行投注-2018年12月02日
             el-table(
                 :data='raceData'
+                @row-click='chooseRate'
             )
                 el-table-column(
                     prop='id',
@@ -29,6 +30,17 @@ export default {
         return {
             raceData: []
         };
+    },
+  methods: {
+    chooseRate(itemData) {
+      this.$router.push({ name: 'raceDetail', params: { id: itemData.id }})
     }
+  },
+  created() {
+      this.$axios.get('/api/front/race/info').then(res => {
+        console.log(res);
+        this.raceData = res.data.data;
+      })
+  }
 };
 </script>
