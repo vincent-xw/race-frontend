@@ -13,7 +13,7 @@
             h3.login-form-title 欢迎使用在线投注系统
             el-form(
                 ref='form',
-                :model='form'
+                v-model='form'
             )
                 el-form-item()
                     el-input(
@@ -67,7 +67,7 @@ export default {
             };
             this.$axios.post('/api/front/login', data).then(res => {
                 console.log(res);
-                
+                this.$router.push('league');
             });
         }
     }

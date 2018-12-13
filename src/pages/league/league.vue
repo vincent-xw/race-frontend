@@ -8,10 +8,11 @@
                 :span='24',
                 :md='12',
                 v-for="item in leagues",
-                :key="item.id"
+                :key="item.id",
             )
-                h2.league-card-title 联赛赛区:{{item.name}}
-                p.league-card-remark {{item.remark}}
+                div(@click='jumpRace')
+                    h2.league-card-title 联赛赛区:{{item.name}}
+                    p.league-card-remark {{item.remark}}
 
 </template>
 <script>
@@ -41,7 +42,22 @@ export default {
                 }
             ]
         };
+    },
+  methods: {
+
+    jumpRace() {
+      console.log('jumpRace');
+      this.$router.push('race')
     }
+
+  },
+  created() {
+      this.$axios.get('/api/front/league/list').then(res => {
+        console.log(res);
+        console.log(res.data.data);
+        this.leagues = res.data.data;
+      });
+  }
 };
 </script>
 <style lang="less">
