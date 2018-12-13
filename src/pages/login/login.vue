@@ -38,13 +38,26 @@
             span &nbsp;
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
     data() {
         return {
             form: {}
         };
     },
+    computed: {
+        ...mapState([
+            'test'
+        ])
+    },
     created() {
+    },
+    mounted() {
+        console.log(this.test);
+        this.$store.commit('updateTest', {
+            test: 2
+        });
+        console.log(this.test); 
     },
     methods: {
         login() {
