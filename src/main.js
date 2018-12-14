@@ -14,13 +14,13 @@ Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.prototype.$axios = axios;
 let router = new VueRouter({
-    routes
+  routes
 });
 
 let store = new Vuex.Store(states);
 
 new Vue({
-    store,
-    router,
-    render: h => h(App)
+  store,
+  router,
+  render: h => h(App)
 }).$mount('#app');
