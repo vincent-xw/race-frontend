@@ -1,7 +1,7 @@
 <template lang="pug">
     el-col(
-        :span="24"
-        :md="8"
+    :span="24"
+      :md="8"
     )
         el-date-picker(
         type="daterange"
@@ -23,7 +23,7 @@
        * 选择赛事，查看详情
        * */
       chooseRace(itemData) {
-        this.$router.push({ name: 'raceDetail', params: { id: itemData.race_id, leagueName: this.leagueName }})
+        this.$router.push({name: 'raceDetail', params: {id: itemData.race_id, leagueName: this.leagueName}})
       },
       /**
        * 获取赛事名称

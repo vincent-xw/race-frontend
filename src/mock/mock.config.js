@@ -6,9 +6,9 @@ import mockjs from 'mockjs';
 import mockUrl from './mock.url.js';
 
 export default {
-    init() {
-        mockUrl.map(item => {
-            mockjs.mock(item.url, item.callback);
-        });
-    }
+  init() {
+    mockUrl.map(item => {
+      mockjs.mock(item.url, item.callback);
+    });
+  }
 };

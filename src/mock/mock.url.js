@@ -6,24 +6,24 @@
  * @param {callback} 当URL被匹配到的时候调用的callback，传三个参数，url,type,body分别表示当前模块的URL地址，请求类型，返回值类型及请求所带的body值，具体参考https://github.com/nuysoft/Mock/wiki/Mock.mock()
  */
 export default [
-    {
-        url: /\/api\/front\/index/,
-        callback: (url, type, body) => {
-            return {
-                status: 0,
-                data: {
-                    name: 'jiaxuewen',
-                    age: 26
-                }
-            };
+  {
+    url: /\/api\/front\/index/,
+    callback: (url, type, body) => {
+      return {
+        status: 0,
+        data: {
+          name: 'jiaxuewen',
+          age: 26
         }
-    },
-    {
-        url: /\/api\/front\/submit/,
-        callback: (url, type, body) => {
-            console.log(url);
-        }
-    },
+      };
+    }
+  },
+  {
+    url: /\/api\/front\/submit/,
+    callback: (url, type, body) => {
+      console.log(url);
+    }
+  },
   {
     url: /\/api\/front\/login/,
     callback: (url, type, body) => {
@@ -113,7 +113,7 @@ export default [
             "horse_info": [
               {
                 "horse_id": "1001",
-                "horse_name":"string",
+                "horse_name": "string",
                 "head_limit": 95,
                 "foot_limit": 95
               }

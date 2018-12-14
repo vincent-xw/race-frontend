@@ -3,13 +3,13 @@
         el-col(:span='24')
             el-breadcrumb(separator='/')
                 el-breadcrumb-item(
-                    :to='{path: '/' }'
+                :to='{path: ' / ' }'
                 ) 马来西亚
                 el-breadcrumb-item(
-                    :to='{path: '/' }'
+                :to='{path: ' / ' }'
                 ) 2018年12月02日比赛编号{{raceId}}
                 el-breadcrumb-item(
-                    :to='{path: '/' }'
+                :to='{path: ' / ' }'
                 ) 投注详情
         el-col(:span='24')
             h3 比赛信息
@@ -24,36 +24,36 @@
 
 </template>
 <script>
-export default {
+  export default {
     data() {
-        return {
-            raceData: {
-                betData: [{}]
-            },
-            raceId: '',
-            raceStatus: 0
-        };
+      return {
+        raceData: {
+          betData: [{}]
+        },
+        raceId: '',
+        raceStatus: 0
+      };
     },
     created() {
-        this.raceId = this.$route.params.id;
+      this.raceId = this.$route.params.id;
     },
     computed: {
-        getRaceStatus() {
-            let status = {
-                0: '未开始',
-                1: '已结束'
-            };
-            return status[this.raceStatus] || '状态未知';
-        }
+      getRaceStatus() {
+        let status = {
+          0: '未开始',
+          1: '已结束'
+        };
+        return status[this.raceStatus] || '状态未知';
+      }
     }
-};
+  };
 </script>
 <style lang="less">
-.bet-detail {
-    h3 {
-        .el-button {
-            float: right;
+    .bet-detail {
+        h3 {
+            .el-button {
+                float: right;
+            }
         }
     }
-}
 </style>

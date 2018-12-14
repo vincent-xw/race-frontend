@@ -3,54 +3,54 @@
         el-col(:span='24')
             el-breadcrumb(separator='/')
                 el-breadcrumb-item(
-                    :to='{path: '/' }'
+                :to='{path: ' / ' }'
                 ) {{leagueName}}
                 el-breadcrumb-item(
-                    :to='{path: '/' }'
+                :to='{path: ' / ' }'
                 ) 2018年12月02日比赛编号{{raceId}}
         el-col(:span='24')
             h3 比赛信息
             p 当前比赛编号{{raceId}} 时间2018年12月02日
             el-table(
-                :data='raceData',
-                width='100%'
+            :data='raceData',
+            width='100%'
             )
                 el-table-column(
-                    prop='horse_id',
-                    label='#'
+                prop='horse_id',
+                label='#'
                 )
                 el-table-column(
-                    prop='horse_name',
-                    label='马匹'
+                prop='horse_name',
+                label='马匹'
                 )
                 el-table-column(
-                    prop='head_limit',
-                    label='头'
+                prop='head_limit',
+                label='头'
                 )
                 el-table-column(
-                    prop='foot_limit',
-                    label='脚'
+                prop='foot_limit',
+                label='脚'
                 )
                 el-table-column(
-                    prop='head_limit',
-                    label='头限额'
+                prop='head_limit',
+                label='头限额'
                 )
                 el-table-column(
-                    prop='foot_limit',
-                    label='脚限额'
+                prop='foot_limit',
+                label='脚限额'
                 )
             el-button(
-                type='primary'
+            type='primary'
             ) 提交
 </template>
 <script>
-export default {
+  export default {
     data() {
-        return {
-            raceData: [],
-            raceId: '',
-          leagueName: '',
-        };
+      return {
+        raceData: [],
+        raceId: '',
+        leagueName: '',
+      };
     },
     created() {
       this.raceId = this.$route.params.id;
@@ -84,5 +84,5 @@ export default {
         });
       },
     }
-};
+  };
 </script>
