@@ -3,6 +3,7 @@ import race from '@/pages/race/race';
 import raceDetail from '@/pages/race-detail/race-detail';
 import betDetail from '@/pages/bet-detail/bet-detail';
 import league from '@/pages/league/league';
+import personal from '@/pages/personal/personal';
 export default [
     {
         path: '/login',
@@ -16,12 +17,12 @@ export default [
         component: league
     },
     {
-        path: '/race',
+        path: '/race/:leagueName',
         name: 'race',
         component: race
     },
     {
-        path: '/race/:id',
+        path: '/race/:leagueName:id',
         name: 'raceDetail',
         component: raceDetail
     },
@@ -29,5 +30,10 @@ export default [
         path: '/race/:id/bet-detail',
         name: 'betDetail',
         component: betDetail
-    }
+    },
+  {
+    path: '/personal',
+    name: 'personal',
+    component: personal
+  }
 ];

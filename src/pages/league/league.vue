@@ -10,7 +10,7 @@
                 v-for="item in leagues",
                 :key="item.id",
             )
-                div(@click='jumpRace')
+                div(@click='jumpRace(item.name)')
                     h2.league-card-title 联赛赛区:{{item.name}}
                     p.league-card-remark {{item.remark}}
 
@@ -44,10 +44,11 @@ export default {
         };
     },
   methods: {
-
-    jumpRace() {
-      console.log('jumpRace');
-      this.$router.push('race')
+    /**
+     * 跳转赛事
+     * */
+    jumpRace(leagueName) {
+      this.$router.push({name: 'race', params: { leagueName: leagueName }})
     }
 
   },
@@ -55,7 +56,7 @@ export default {
       this.$axios.get('/api/front/league/list').then(res => {
         console.log(res);
         console.log(res.data.data);
-        this.leagues = res.data.data;
+        this.leagues = res.data.data.league_list;
       });
   }
 };

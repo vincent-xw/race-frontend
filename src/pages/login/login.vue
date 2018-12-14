@@ -55,7 +55,7 @@ export default {
     mounted() {
         console.log(this.test);
         this.$store.commit('updateTest', {
-            test: 2
+            test: 2,
         });
         console.log(this.test); 
     },

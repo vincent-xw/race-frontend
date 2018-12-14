@@ -37,30 +37,66 @@ export default [
     url: /\/api\/front\/league\/list/,
     callback: (url, type, body) => {
       return {
-        status: 0,
-        data: [
-          {
-            id: 0,
-            name: '马来西亚',
-            remark: '超高赔率，超多机会'
-          },
-          {
-            id: 1,
-            name: '澳大利亚',
-            remark: '超高赔率，超多机会'
-          },
-          {
-            id: 2,
-            name: '香港',
-            remark: '超高赔率，超多机会'
-          },
-          {
-            id: 3,
-            name: '新加坡',
-            remark: '超高赔率，超多机会'
-          }
-        ]
+        "status": 0,
+        "msg": "",
+        "data": {
+          "league_list": [
+            {
+              id: 0,
+              name: '马来西亚',
+              remark: '超高赔率，超多机会'
+            },
+            {
+              id: 1,
+              name: '澳大利亚',
+              remark: '超高赔率，超多机会'
+            },
+            {
+              id: 2,
+              name: '香港',
+              remark: '超高赔率，超多机会'
+            },
+            {
+              id: 3,
+              name: '新加坡',
+              remark: '超高赔率，超多机会'
+            }
+          ]
+        }
 
+      };
+    }
+  },
+  {
+    url: /\/api\/front\/race\/list/,
+    callback: (url, type, body) => {
+      return {
+        "status": 0,
+        "msg": "",
+        "data": {
+          "race_list": [
+            {
+              race_id: 0,
+              raceName: '哈哈',
+              race_time: '123',
+            },
+            {
+              race_id: 1,
+              raceName: '哈哈1',
+              race_time: '124',
+            },
+            {
+              race_id: 2,
+              raceName: '哈哈2',
+              race_time: '125',
+            },
+            {
+              race_id: 3,
+              raceName: '哈哈3',
+              race_time: '126',
+            },
+          ]
+        }
       };
     }
   },
@@ -68,29 +104,31 @@ export default [
     url: /\/api\/front\/race\/info/,
     callback: (url, type, body) => {
       return {
-        status: 0,
-        data: [
-          {
-            id: 0,
-            raceName: '哈哈',
-            raceTime: '123',
-          },
-          {
-            id: 1,
-            raceName: '哈哈1',
-            raceTime: '124',
-          },
-          {
-            id: 2,
-            raceName: '哈哈2',
-            raceTime: '125',
-          },
-          {
-            id: 3,
-            raceName: '哈哈3',
-            raceTime: '126',
-          },
-        ]
+        "status": 0,
+        "msg": "",
+        "data": {
+          "race_info": {
+            "league_id": "1",
+            "race_time": 1544544513119,
+            "horse_info": [
+              {
+                "horse_id": "1001",
+                "horse_name":"string",
+                "head_limit": 95,
+                "foot_limit": 95
+              }
+            ]
+          }
+        }
+      };
+    }
+  },
+  {
+    url: /\/api\/front\/race\/bet/,
+    callback: (url, type, body) => {
+      return {
+        "status": 0,
+        "msg": ""
       };
     }
   },
