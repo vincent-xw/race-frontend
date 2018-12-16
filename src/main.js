@@ -17,7 +17,6 @@ Vue.prototype.$axios = axios;
 let router = new VueRouter({
   routes
 });
-
 let store = new Vuex.Store(states);
 
 new Vue({

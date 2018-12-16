@@ -5,8 +5,8 @@
                 el-breadcrumb-item(
                 :to='{path: ' / ' }'
                 ) {{this.leagueName}}
-                    span(
-                    @click=""
+                    span.change-league(
+                    @click="changeLeague"
                     )  点击更换
         el-col(:span='24')
             h3 请选择比赛然后进行投注-2018年12月02日
@@ -22,7 +22,6 @@
                 prop='race_name',
                 label='比赛名称'
                 )
-                    template
                 el-table-column(
                 prop='race_time',
                 label='比赛时间'
@@ -47,8 +46,10 @@
        * 获取赛事名称
        * */
       initRaceData(name, dataArr = []) {
+
         return dataArr.map(item => {
-          item['race_name'] = `${name}${item.race_id}`;
+          item.race_name = `${name}${item.race_id}`;
+          item.race_time = new Date(+item.race_time).toLocaleString();
           return item;
         });
       },
@@ -56,7 +57,7 @@
        * 更换赛区
        * */
       changeLeague() {
-        this.$route.pop(-1);
+        this.$router.go(-1);
       }
     },
     created() {
@@ -69,3 +70,9 @@
     }
   };
 </script>
+
+<style lang="less">
+    .change-league {
+        color: #368EFF;
+    }
+</style>
