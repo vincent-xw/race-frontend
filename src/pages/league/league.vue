@@ -9,6 +9,7 @@
             :md='12',
             v-for="item in leagues",
             :key="item.id",
+
             )
                 div(@click='jumpRace(item.name)')
                     h2.league-card-title 联赛赛区:{{item.name}}
