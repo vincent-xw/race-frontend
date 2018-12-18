@@ -5,8 +5,7 @@ import betDetail from '@/pages/bet-detail/bet-detail';
 import league from '@/pages/league/league';
 import personal from '@/pages/personal/personal';
 import resetPassword from '@/pages/reset-password/reset-password';
-export default [
-  {
+export default [{
     path: '/login',
     name: 'login',
     component: login
@@ -41,5 +40,5 @@ export default [
     path: '/reset-password',
     name: 'resetPassword',
     component: resetPassword
-  },
+  }
 ];
