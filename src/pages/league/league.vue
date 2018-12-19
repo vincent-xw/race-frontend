@@ -12,36 +12,15 @@
 
             )
                 div(@click='jumpRace(item.name)')
-                    h2.league-card-title 联赛赛区:{{item.name}}
-                    p.league-card-remark {{item.remark}}
+                    h2.league-card-title 联赛赛区:{{item.league_name}}
+                    p.league-card-remark {{item.league_remark}}
 
 </template>
 <script>
   export default {
     data() {
       return {
-        leagues: [
-          {
-            id: 0,
-            name: '马来西亚',
-            remark: '超高赔率，超多机会'
-          },
-          {
-            id: 1,
-            name: '马来西亚',
-            remark: '超高赔率，超多机会'
-          },
-          {
-            id: 2,
-            name: '马来西亚',
-            remark: '超高赔率，超多机会'
-          },
-          {
-            id: 3,
-            name: '马来西亚',
-            remark: '超高赔率，超多机会'
-          }
-        ]
+        leagues: []
       };
     },
     methods: {

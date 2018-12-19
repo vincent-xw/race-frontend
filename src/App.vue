@@ -6,7 +6,8 @@
                     p 欢迎使用在线投注系统
                 el-col(
                 :span='8',
-                align='right'
+                align='right',
+                @click="gotoPersonal"
                 )
                     p 欢迎:agent001
         el-main.content
@@ -18,9 +19,15 @@
 </template>
 
 <script>
-
   export default {
-    name: 'app'
+    name: 'app',
+    methods: {
+      gotoPersonal() {
+        this.$router.push({
+          name: 'personal'
+        });
+      }
+    }
   };
 </script>
 
