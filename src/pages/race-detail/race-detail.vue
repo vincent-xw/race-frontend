@@ -1,5 +1,7 @@
 <template lang="pug">
-    el-row()
+    el-row(
+    v-loading="loading"
+    )
         el-col(:span='24')
             el-breadcrumb(separator='/')
                 el-breadcrumb-item(
@@ -47,6 +49,7 @@
         el-button(
         @click="doBet"
         type='primary'
+        :loading="commitLoading"
         ) 提交
 </template>
 <script>
@@ -58,15 +61,23 @@
         },
         raceId: '',
         leagueName: '',
+        loading: false,
+        commitLoading: false,
       };
     },
     created() {
       this.raceId = this.$route.params.id;
       this.leagueName = this.$route.params.leagueName;
       this.$axios.get('/api/front/race/info').then(res => {
-        const raceInfo = res.data.data.race_info;
-        this.formData.raceData = raceInfo.horse_info;
-        this.raceId = raceInfo.league_id;
+        this.$handleResponse(res.data.status, res.data.msg, () => {
+          const raceInfo = res.data.data.race_info;
+          this.formData.raceData = raceInfo.horse_info;
+          this.raceId = raceInfo.league_id;
+        });
+        this.loading = false;
+      }).catch(err => {
+        console.log(err);
+        this.loading = false;
       });
     },
     methods: {
@@ -74,7 +85,7 @@
        * 提交投注
        * */
       doBet() {
-        //todo 目前的想法是通过操作数据来判定是否参与下注 将 bet_head bet_foot haveBet 加入对象
+        this.commitLoading = true;
         const horseInfoArr = this.formData.raceData.filter(item => item.bet_head || item.bet_foot);
         const bet_info = horseInfoArr.map(item => ({
           horse_id: item.horse_id,
@@ -86,9 +97,14 @@
           race_id: this.raceId,
         };
         this.$axios.post('/api/front/race/bet', params).then(res => {
-          console.log(res);
-          //todo 需要传递一个id
-          this.$router.push({name: 'betDetail', params: { id: '1' }})
+          this.$handleResponse(res.data.status, res.data.msg, () => {
+            //todo 需要传递一个id
+            this.$router.push({name: 'betDetail', params: { id: '1' }});
+          });
+          this.commitLoading = false;
+        }).catch(err => {
+          console.log(err);
+          this.commitLoading = false;
         });
       },
     }

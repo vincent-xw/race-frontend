@@ -92,6 +92,7 @@
             el-button(
             type='primary'
             @click="search"
+            :loading="searchLoading"
             ) 查询
         el-col.table(
         :span="24"
@@ -99,6 +100,7 @@
             el-table(
             :data="tableData"
             style="width: 100%"
+            @row-click="rwoClick"
             )
                 el-table-column(
                 prop="bet_id"
@@ -127,9 +129,14 @@
         betEndTime: '',
         raceStartTime: '',
         raceEndTime: '',
+        searchLoading: false,
       };
     },
     methods: {
+      rwoClick(row) {
+        console.log(row);
+        this.$router.push({name: 'betDetail', params: {id: row.bet_id, leagueName: ''}})
+      },
       /**
        * 检查时间
        * @param start 开始时间 Date对象
@@ -167,13 +174,19 @@
           console.log('填写填写有误');
           return;
         }
-        console.log(params);
+        this.searchLoading = true;
         this.$axios.post('/api/front/race/bet/history', params).then(res => {
-          this.tableData = res.data.data.bet_list.map(item => {
-            item.bet_time = new Date(+item.bet_time).toLocaleDateString();
-            item.lottery_time = new Date(+item.lottery_time).toLocaleDateString();
-            return item;
+          this.$handleResponse(res.data.status, res.data.msg, () => {
+            this.tableData = res.data.data.bet_list.map(item => {
+              item.bet_time = new Date(+item.bet_time).toLocaleDateString();
+              item.lottery_time = new Date(+item.lottery_time).toLocaleDateString();
+              return item;
+            });
           });
+          this.searchLoading = false;
+        }).catch(err => {
+          console.log(err);
+          this.searchLoading = false;
         })
       },
       /**

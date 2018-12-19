@@ -30,6 +30,7 @@
                     el-button(
                     type='primary',
                     @click='login'
+                    :loading="loading"
                     ) 登录
         el-col(
         :span='24',
@@ -42,7 +43,8 @@
   export default {
     data() {
       return {
-        form: {}
+        form: {},
+        loading: false,
       };
     },
     computed: {
@@ -63,11 +65,18 @@
       login() {
         let data = {
           username: this.form.username,
-          password: this.form.password
+          password: this.form.password,
+          loading: false,
         };
+        this.loading = true;
         this.$axios.post('/api/front/login', data).then(res => {
-          console.log(res);
-          this.$router.push('league');
+          this.$handleResponse(res.data.status, res.data.msg, () => {
+            this.$router.push('league');
+          });
+          this.loading = false;
+        }).catch(err => {
+          console.log(err);
+          this.loading = false;
         });
       }
     }

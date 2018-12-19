@@ -1,5 +1,7 @@
 <template lang="pug">
-    el-row()
+    el-row(
+    v-loading="loading"
+    )
         el-col(:span='24')
             el-breadcrumb(separator='/')
                 el-breadcrumb-item(
@@ -33,6 +35,7 @@
       return {
         raceData: [],
         leagueName: '',
+        loading: false,
       };
     },
     methods: {
@@ -61,10 +64,18 @@
       }
     },
     created() {
+      this.loading = true;
       const name = this.$route.params.leagueName;
       this.leagueName = name;
       this.$axios.get('/api/front/race/list').then(res => {
+        this.$handleResponse(res.data.status, res.data.msg, () => {
+          this.leagues = res.data.data.league_list;
+        });
         this.raceData = this.initRaceData(name, res.data.data.race_list)
+        this.loading = false
+      }).catch(err => {
+        console.log(err);
+        this.loading = false;
       });
       console.log(this.leagueName);
     }

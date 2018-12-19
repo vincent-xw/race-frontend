@@ -1,5 +1,7 @@
 <template lang="pug">
-    el-row()
+    el-row(
+    v-loading="loading"
+    )
         el-col(
         :span='24',
         :md='8'
@@ -41,7 +43,8 @@
             name: '马来西亚',
             remark: '超高赔率，超多机会'
           }
-        ]
+        ],
+        loading: true
       };
     },
     methods: {
@@ -54,10 +57,15 @@
 
     },
     created() {
+      this.loading = true;
       this.$axios.get('/api/front/league/list').then(res => {
-        console.log(res);
-        console.log(res.data.data);
-        this.leagues = res.data.data.league_list;
+        this.$handleResponse(res.data.status, res.data.msg, () => {
+          this.leagues = res.data.data.league_list;
+        });
+        this.loading = false;
+      }).catch(err => {
+        console.log(err);
+        this.loading = false;
       });
     }
   };

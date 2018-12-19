@@ -9,7 +9,7 @@ import states from './config/state';
 import axiosConfig from './config/axios';
 import mock from './mock/mock.config.js';
 // 加载mock功能,此功能在正式环境不会使用届时会移除
-// mock.init();
+mock.init();
 
 Vue.use(Vuex);
 Vue.config.productionTip = false;
@@ -18,6 +18,23 @@ Vue.prototype.$axios = axios;
 let router = new VueRouter({
   routes
 });
+Vue.prototype.$toast = function(text = '系统异常', options) {
+  const option = {
+    showClose: true,
+    message: text || '系统异常',
+    type: 'error',
+    ...options
+  };
+  this.$message(option);
+};
+
+Vue.prototype.$handleResponse = function(status, msg,callback) {
+  if (status === 0) {
+    callback && callback();
+  } else {
+    this.$toast(msg)
+  }
+};
 let store = new Vuex.Store(states);
 
 let vm = new Vue({

@@ -22,7 +22,7 @@ export default [{
     component: race
   },
   {
-    path: '/race/:leagueName/:id',
+    path: '/race/:id',
     name: 'raceDetail',
     component: raceDetail
   },
