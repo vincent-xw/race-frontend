@@ -17,7 +17,7 @@ export default [{
     component: league
   },
   {
-    path: '/race/:leagueName',
+    path: '/race/:leagueName/:leagueId',
     name: 'race',
     component: race
   },

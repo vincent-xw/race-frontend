@@ -9,7 +9,7 @@
                     @click="changeLeague"
                     )  点击更换
         el-col(:span='24')
-            h3 请选择比赛然后进行投注-2018年12月02日
+            h3 请选择比赛然后进行投注-{{now}}
             el-table(
             :data='raceData'
               @row-click='chooseRace'
@@ -33,6 +33,8 @@
       return {
         raceData: [],
         leagueName: '',
+        leagueId: '',
+        now: new Date().toLocaleDateString()
       };
     },
     methods: {
@@ -49,7 +51,7 @@
 
         return dataArr.map(item => {
           item.race_name = `${name}${item.race_id}`;
-          item.race_time = new Date(+item.race_time).toLocaleString();
+          item.race_time = new Date(item.race_time).toLocaleString();
           return item;
         });
       },
@@ -62,8 +64,12 @@
     },
     created() {
       const name = this.$route.params.leagueName;
+      const id = this.$route.params.leagueId;
       this.leagueName = name;
-      this.$axios.get('/api/front/race/list').then(res => {
+      this.leagueId = id;
+      this.$axios.get('/api/front/race/list' + '?' + this.$qs.stringify({
+          league_id: this.leagueId
+        })).then(res => {
         this.raceData = this.initRaceData(name, res.data.data.race_list)
       });
       console.log(this.leagueName);
