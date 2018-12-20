@@ -63,13 +63,18 @@
     created() {
       this.raceId = this.$route.params.id;
       this.leagueName = this.$route.params.leagueName;
-      this.$axios.get('/api/front/race/info').then(res => {
-        const raceInfo = res.data.data.race_info;
-        this.formData.raceData = raceInfo.horse_info;
-        this.raceId = raceInfo.league_id;
-      });
+      this.getRaceInfo();
     },
     methods: {
+        getRaceInfo() {
+            this.$axios.get('/api/front/race/info' + '?' + this.$qs.stringify({
+                race_id: this.raceId
+            })).then(res => {
+                const raceInfo = res.data.data.race_info;
+                this.formData.raceData = raceInfo.horse_info;
+                this.raceId = raceInfo.league_id;
+            });
+        },
       /**
        * 提交投注
        * */
