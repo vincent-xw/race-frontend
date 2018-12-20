@@ -49,28 +49,42 @@
     },
     computed: {
       ...mapState([
-        'test'
+        'isLogin'
       ])
     },
     created() {
     },
     mounted() {
-      console.log(this.test);
-      this.$store.commit('updateTest', {
-        test: 2,
+      this.$store.commit('updateIsLogin', {
+        isLoginPage: true,
       });
-      console.log(this.test);
+      if (this.$route.params.needLogin) {
+        this.$toast('请重新登录');
+      }
+    },
+    destroyed() {
+      this.$store.commit('updateIsLogin', {
+        isLoginPage: false,
+      });
     },
     methods: {
       login() {
+        const form = this.form;
+        if (!form.username || !form.password) {
+          return;
+        }
         let data = {
-          username: this.form.username,
-          password: this.form.password,
+          username: form.username,
+          password: form.password,
           loading: false,
         };
         this.loading = true;
         this.$axios.post('/api/front/login', data).then(res => {
           this.$handleResponse(res.data.status, res.data.msg, () => {
+            localStorage.setItem('userName', form.username);
+            this.$store.commit('updateUserName', {
+              userName: form.username,
+            });
             this.$router.push('league');
           });
           this.loading = false;
@@ -79,7 +93,7 @@
           this.loading = false;
         });
       }
-    }
+    },
   };
 </script>
 <style lang="less">

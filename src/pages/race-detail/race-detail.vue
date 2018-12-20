@@ -31,13 +31,14 @@
                             el-col(:span="6")
                                 span() 马匹
                             el-col(:span="18")
-                                span() {{item.horse_name}}{{item.horse_id}}
+                                span() {{item.horse_name}}
                         el-row()
                             el-col(:span="6")
                                 span() 头
                             el-col(:span="18")
                                 el-input(
                                 v-model="item.bet_head"
+                                :placeholder="item.head_limit"
                                 )
                         el-row()
                             el-col(:span="6")
@@ -45,6 +46,7 @@
                             el-col(:span="18")
                                 el-input(
                                 v-model="item.bet_foot"
+                                :placeholder="item.head_limit"
                                 )
         el-button(
         @click="doBet"
@@ -66,21 +68,32 @@
       };
     },
     created() {
+      if (typeof (this.$route.params.id) === undefined) {
+        this.$router.replace({name: 'race'})
+      }
       this.raceId = this.$route.params.id;
       this.leagueName = this.$route.params.leagueName;
-      this.$axios.get('/api/front/race/info').then(res => {
-        this.$handleResponse(res.data.status, res.data.msg, () => {
-          const raceInfo = res.data.data.race_info;
-          this.formData.raceData = raceInfo.horse_info;
-          this.raceId = raceInfo.league_id;
-        });
-        this.loading = false;
-      }).catch(err => {
-        console.log(err);
-        this.loading = false;
-      });
+      this.getRaceDetail()
     },
     methods: {
+      getRaceDetail() {
+        this.$axios.get('/api/front/race/info').then(res => {
+          console.log('res: ', res);
+          this.$handleResponse(res.data.status, res.data.msg, () => {
+            const raceInfo = res.data.data.race_info;
+            this.formData.raceData = raceInfo.horseInfo.map(item => {
+              item.foot_limit = `脚限额${item.foot_limit}`;
+              item.head_limit = `头限额${item.head_limit}`;
+              return item;
+            });
+            this.raceId = raceInfo.league_id;
+          });
+          this.loading = false;
+        }).catch(err => {
+          console.log(err);
+          this.loading = false;
+        });
+      },
       /**
        * 提交投注
        * */

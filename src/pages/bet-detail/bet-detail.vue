@@ -39,6 +39,9 @@
       };
     },
     created() {
+      if (typeof (this.$route.params.id) === undefined) {
+        this.$router.go(-1); // 由于这个页面有2个入口  因此 回退历史。
+      }
       this.loading = true;
       this.raceId = this.$route.params.id;
       const params = { bet_id: this.raceId };

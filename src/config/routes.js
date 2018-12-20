@@ -17,12 +17,12 @@ export default [{
     component: league
   },
   {
-    path: '/race/:leagueName',
+    path: '/race/:leagueName/:id',
     name: 'race',
     component: race
   },
   {
-    path: '/race/:id',
+    path: '/raceDetail/:id',
     name: 'raceDetail',
     component: raceDetail
   },

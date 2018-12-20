@@ -34,6 +34,15 @@ export default [
     }
   },
   {
+    url: /\/api\/front\/logout/,
+    callback: (url, type, body) => {
+      return {
+        status: 0,
+        msg: '登陆成功'
+      };
+    }
+  },
+  {
     url: /\/api\/front\/resetpwd/,
     callback: (url, type, body) => {
       return {
@@ -114,40 +123,97 @@ export default [
     callback: (url, type, body) => {
       return {
         "status": 0,
-        "msg": "",
+        "msg": "查询成功",
         "data": {
           "race_info": {
-            "league_id": "1",
-            "race_time": 1544544513119,
-            "horse_info": [
-              {
-                "horse_id": "1001",
-                "horse_name": "a",
-                "head_limit": 95,
-                "foot_limit": 95
-              },
-              {
-                "horse_id": "1002",
-                "horse_name": "b",
-                "head_limit": 95,
-                "foot_limit": 95
-              },
-              {
-                "horse_id": "1003",
-                "horse_name": "c",
-                "head_limit": 95,
-                "foot_limit": 95
-              },
-              {
-                "horse_id": "1004",
-                "horse_name": "d",
-                "head_limit": 95,
-                "foot_limit": 95
-              }
-            ]
+            "race_id": 10,
+            "league_id": 2,
+            "created_time": "2018-12-15T18:06:33.000Z",
+            "updated_time": "2018-12-15T18:06:33.000Z",
+            "race_time": "2018-12-11T16:08:33.000Z",
+            "race_name": "马来西亚_比赛_2018-12-16",
+            "race_status": 3,
+            "all_bet": 0,
+            "all_win": 0,
+            "player_win": 0,
+            "head_odds": 150,
+            "foot_odds": 85,
+            "horseInfo": [{
+              "horse_id": 6,
+              "horse_name": "222",
+              "head_limit": 95,
+              "foot_limit": 95,
+              "horse_status": 0,
+              "race_id": 10,
+              "horse_bet_status": null,
+              "horse_score": 1
+            }, {
+              "horse_id": 7,
+              "horse_name": "111",
+              "head_limit": 95,
+              "foot_limit": 95,
+              "horse_status": 0,
+              "race_id": 10,
+              "horse_bet_status": null,
+              "horse_score": 0
+            }, {
+              "horse_id": 8,
+              "horse_name": "string",
+              "head_limit": 95,
+              "foot_limit": 95,
+              "horse_status": 0,
+              "race_id": 11,
+              "horse_bet_status": null,
+              "horse_score": 0
+            }, {
+              "horse_id": 9,
+              "horse_name": "111",
+              "head_limit": 95,
+              "foot_limit": 95,
+              "horse_status": 0,
+              "race_id": 11,
+              "horse_bet_status": null,
+              "horse_score": 0
+            }, {
+              "horse_id": 10,
+              "horse_name": "string",
+              "head_limit": 95,
+              "foot_limit": 95,
+              "horse_status": 0,
+              "race_id": 12,
+              "horse_bet_status": null,
+              "horse_score": 0
+            }, {
+              "horse_id": 11,
+              "horse_name": "111",
+              "head_limit": 95,
+              "foot_limit": 95,
+              "horse_status": 0,
+              "race_id": 12,
+              "horse_bet_status": null,
+              "horse_score": 0
+            }, {
+              "horse_id": 12,
+              "horse_name": "string",
+              "head_limit": 95,
+              "foot_limit": 95,
+              "horse_status": 0,
+              "race_id": 13,
+              "horse_bet_status": null,
+              "horse_score": 0
+            }, {
+              "horse_id": 13,
+              "horse_name": "111",
+              "head_limit": 95,
+              "foot_limit": 95,
+              "horse_status": 0,
+              "race_id": 13,
+              "horse_bet_status": null,
+              "horse_score": 0
+            }]
           }
         }
-      };
+      }
     }
   },
   {

@@ -64,14 +64,19 @@
       }
     },
     created() {
+      if (typeof (this.$route.params.id) === undefined) {
+        this.$router.replace({name: 'league'});
+        return;
+      }
       this.loading = true;
       const name = this.$route.params.leagueName;
+      const league_id = this.$route.params.id;
       this.leagueName = name;
-      this.$axios.get('/api/front/race/list').then(res => {
+      this.$axios.post('/api/front/race/list', { league_id }).then(res => {
         this.$handleResponse(res.data.status, res.data.msg, () => {
           this.leagues = res.data.data.league_list;
         });
-        this.raceData = this.initRaceData(name, res.data.data.race_list)
+        this.raceData = this.initRaceData(name, res.data.data.race_list);
         this.loading = false
       }).catch(err => {
         console.log(err);

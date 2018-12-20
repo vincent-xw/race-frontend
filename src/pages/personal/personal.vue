@@ -118,6 +118,9 @@
                 prop="lottery_time"
                 label="开奖时间"
                 )
+        el-button(
+        @click="logout"
+        ) 退出登录
 </template>
 <script>
   // todo 响应式 布局 目前并没有适配
@@ -133,6 +136,14 @@
       };
     },
     methods: {
+      logout() {
+        this.$axios.get('/api/front/logout').then(res => {
+          this.$handleResponse(res.data.status, res.data.msg, () => {
+            this.$router.replace({name: 'login'})
+          });
+          console.log(res);
+        })
+      },
       rwoClick(row) {
         console.log(row);
         this.$router.push({name: 'betDetail', params: {id: row.bet_id, leagueName: ''}})

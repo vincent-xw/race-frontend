@@ -13,7 +13,7 @@
             :key="item.id",
 
             )
-                div(@click='jumpRace(item.name)')
+                div(@click='jumpRace(item.name, item.id)')
                     h2.league-card-title 联赛赛区:{{item.name}}
                     p.league-card-remark {{item.remark}}
 
@@ -51,8 +51,8 @@
       /**
        * 跳转赛事
        * */
-      jumpRace(leagueName) {
-        this.$router.push({name: 'race', params: {leagueName: leagueName}})
+      jumpRace(leagueName, id) {
+        this.$router.push({name: 'race', params: { leagueName, id }})
       }
 
     },
