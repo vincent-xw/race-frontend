@@ -6,7 +6,8 @@
                     p 欢迎使用在线投注系统
                 el-col(
                 :span='8',
-                align='right'
+                align='right',
+                @click="gotoPersonal"
                 )
                     p(
                     @click="goPersonal"

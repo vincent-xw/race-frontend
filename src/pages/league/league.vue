@@ -13,46 +13,24 @@
             :key="item.id",
 
             )
-                div(@click='jumpRace(item.name, item.id)')
-                    h2.league-card-title 联赛赛区:{{item.name}}
-                    p.league-card-remark {{item.remark}}
+                div(@click='jumpRace(item.league_name, item.league_id)')
+                    h2.league-card-title 联赛赛区:{{item.league_name}}
+                    p.league-card-remark {{item.league_remark}}
 
 </template>
 <script>
   export default {
     data() {
       return {
-        leagues: [
-          {
-            id: 0,
-            name: '马来西亚',
-            remark: '超高赔率，超多机会'
-          },
-          {
-            id: 1,
-            name: '马来西亚',
-            remark: '超高赔率，超多机会'
-          },
-          {
-            id: 2,
-            name: '马来西亚',
-            remark: '超高赔率，超多机会'
-          },
-          {
-            id: 3,
-            name: '马来西亚',
-            remark: '超高赔率，超多机会'
-          }
-        ],
-        loading: true
+        leagues: []
       };
     },
     methods: {
       /**
        * 跳转赛事
        * */
-      jumpRace(leagueName, id) {
-        this.$router.push({name: 'race', params: { leagueName, id }})
+      jumpRace(leagueName, leagueId) {
+        this.$router.push({name: 'race', params: {leagueName: leagueName, leagueId: leagueId}})
       }
 
     },
