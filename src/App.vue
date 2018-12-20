@@ -9,7 +9,9 @@
                 align='right',
                 @click="gotoPersonal"
                 )
-                    p 欢迎:agent001
+                    p(
+                    @click="goPersonal"
+                    ) {{getText}}
         el-main.content
             router-view
         el-footer.footer-nav
@@ -19,13 +21,29 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex';
   export default {
     name: 'app',
+    data() {
+      return {
+        userNameLocal: '',
+      }
+    },
+    computed: {
+      ...mapState([
+        'isLoginPage',
+        'userName',
+      ]),
+      getText() {
+        return this.isLoginPage ? '' : `欢迎:${this.userName || this.userNameLocal || ''}`;
+      }
+    },
+    mounted() {
+      this.userNameLocal = localStorage.getItem('userName')
+    },
     methods: {
-      gotoPersonal() {
-        this.$router.push({
-          name: 'personal'
-        });
+      goPersonal() {
+        this.$router.push({ name: 'personal' })
       }
     }
   };

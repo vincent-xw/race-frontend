@@ -1,5 +1,5 @@
 <template lang="pug">
-    el-row(class='bet-detail')
+    el-row(class='bet-detail' v-loading="loading")
         el-col(:span='24')
             el-breadcrumb(separator='/')
                 el-breadcrumb-item(
@@ -34,17 +34,29 @@
         raceTime: '',
         leagueName: '',
         raceId: '',
-        raceStatus: 0
+        raceStatus: 0,
+        loading: false,
       };
     },
     created() {
+      if (typeof (this.$route.params.id) === undefined) {
+        this.$router.go(-1); // 由于这个页面有2个入口  因此 回退历史。
+      }
+      this.loading = true;
       this.raceId = this.$route.params.id;
       const params = { bet_id: this.raceId };
       this.$axios.post('/api/front/race/bet/detail', params).then(res => {
-        const { bet_detail = {}, bet_detail: { horse_info = [] } } = res.data.data;
-        this.raceData.betData = horse_info;
-        this.leagueName = bet_detail.league_name;
-        this.raceTime = new Date(+bet_detail.race_time).toLocaleDateString();
+        this.$handleResponse(res.data.status, res.data.msg, () => {
+          //todo 需要传递一个id
+          const { bet_detail = {}, bet_detail: { horse_info = [] } } = res.data.data;
+          this.raceData.betData = horse_info;
+          this.leagueName = bet_detail.league_name;
+          this.raceTime = new Date(+bet_detail.race_time).toLocaleDateString();
+        });
+        this.loading = false;
+      }).catch(err => {
+        console.log(err);
+        this.loading = false;
       })
     },
     computed: {
