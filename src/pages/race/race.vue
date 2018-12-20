@@ -1,5 +1,7 @@
 <template lang="pug">
-    el-row()
+    el-row(
+    v-loading="loading"
+    )
         el-col(:span='24')
             el-breadcrumb(separator='/')
                 el-breadcrumb-item(
@@ -35,6 +37,7 @@
         leagueName: '',
         leagueId: '',
         now: new Date().toLocaleDateString()
+        loading: false,
       };
     },
     methods: {
@@ -63,6 +66,11 @@
       }
     },
     created() {
+      if (typeof (this.$route.params.leagueId) === undefined) {
+        this.$router.replace({name: 'league'});
+        return;
+      }
+      this.loading = true;
       const name = this.$route.params.leagueName;
       const id = this.$route.params.leagueId;
       this.leagueName = name;
@@ -70,7 +78,13 @@
       this.$axios.get('/api/front/race/list' + '?' + this.$qs.stringify({
           league_id: this.leagueId
         })).then(res => {
-        this.raceData = this.initRaceData(name, res.data.data.race_list)
+        this.$handleResponse(res.data.status, res.data.msg, () => {
+          this.raceData = this.initRaceData(name, res.data.data.race_list)
+        });
+        this.loading = false
+      }).catch(err => {
+        console.log(err);
+        this.loading = false;
       });
       console.log(this.leagueName);
     }

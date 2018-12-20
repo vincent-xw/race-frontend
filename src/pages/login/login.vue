@@ -30,6 +30,7 @@
                     el-button(
                     type='primary',
                     @click='login'
+                    :loading="loading"
                     ) 登录
         el-col(
         :span='24',
@@ -42,35 +43,57 @@
   export default {
     data() {
       return {
-        form: {}
+        form: {},
+        loading: false,
       };
     },
     computed: {
       ...mapState([
-        'test'
+        'isLogin'
       ])
     },
     created() {
     },
     mounted() {
-      console.log(this.test);
-      this.$store.commit('updateTest', {
-        test: 2,
+      this.$store.commit('updateIsLogin', {
+        isLoginPage: true,
       });
-      console.log(this.test);
+      if (this.$route.params.needLogin) {
+        this.$toast('请重新登录');
+      }
+    },
+    destroyed() {
+      this.$store.commit('updateIsLogin', {
+        isLoginPage: false,
+      });
     },
     methods: {
       login() {
+        const form = this.form;
+        if (!form.username || !form.password) {
+          return;
+        }
         let data = {
-          username: this.form.username,
-          password: this.form.password
+          username: form.username,
+          password: form.password,
+          loading: false,
         };
+        this.loading = true;
         this.$axios.post('/api/front/login', data).then(res => {
-          console.log(res);
-          this.$router.push('league');
+          this.$handleResponse(res.data.status, res.data.msg, () => {
+            localStorage.setItem('userName', form.username);
+            this.$store.commit('updateUserName', {
+              userName: form.username,
+            });
+            this.$router.push('league');
+          });
+          this.loading = false;
+        }).catch(err => {
+          console.log(err);
+          this.loading = false;
         });
       }
-    }
+    },
   };
 </script>
 <style lang="less">

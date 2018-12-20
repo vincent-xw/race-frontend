@@ -1,5 +1,7 @@
 <template lang="pug">
-    el-row()
+    el-row(
+    v-loading="loading"
+    )
         el-col(:span='24')
             el-breadcrumb(separator='/')
                 el-breadcrumb-item(
@@ -29,13 +31,14 @@
                             el-col(:span="6")
                                 span() 马匹
                             el-col(:span="18")
-                                span() {{item.horse_name}}{{item.horse_id}}
+                                span() {{item.horse_name}}
                         el-row()
                             el-col(:span="6")
                                 span() 头
                             el-col(:span="18")
                                 el-input(
                                 v-model="item.bet_head"
+                                :placeholder="item.head_limit"
                                 )
                         el-row()
                             el-col(:span="6")
@@ -43,10 +46,12 @@
                             el-col(:span="18")
                                 el-input(
                                 v-model="item.bet_foot"
+                                :placeholder="item.head_limit"
                                 )
         el-button(
         @click="doBet"
         type='primary'
+        :loading="commitLoading"
         ) 提交
 </template>
 <script>
@@ -58,28 +63,42 @@
         },
         raceId: '',
         leagueName: '',
+        loading: false,
+        commitLoading: false,
       };
     },
     created() {
+      if (typeof (this.$route.params.id) === undefined) {
+        this.$router.replace({name: 'race'})
+      }
       this.raceId = this.$route.params.id;
       this.leagueName = this.$route.params.leagueName;
-      this.getRaceInfo();
+      this.getRaceDetail();
     },
     methods: {
-        getRaceInfo() {
-            this.$axios.get('/api/front/race/info' + '?' + this.$qs.stringify({
-                race_id: this.raceId
-            })).then(res => {
-                const raceInfo = res.data.data.race_info;
-                this.formData.raceData = raceInfo.horse_info;
-                this.raceId = raceInfo.league_id;
+      getRaceDetail() {
+        this.$axios.get('/api/front/race/info').then(res => {
+          console.log('res: ', res);
+          this.$handleResponse(res.data.status, res.data.msg, () => {
+            const raceInfo = res.data.data.race_info;
+            this.formData.raceData = raceInfo.horseInfo.map(item => {
+              item.foot_limit = `脚限额${item.foot_limit}`;
+              item.head_limit = `头限额${item.head_limit}`;
+              return item;
             });
-        },
+            this.raceId = raceInfo.league_id;
+          });
+          this.loading = false;
+        }).catch(err => {
+          console.log(err);
+          this.loading = false;
+        });
+      },
       /**
        * 提交投注
        * */
       doBet() {
-        //todo 目前的想法是通过操作数据来判定是否参与下注 将 bet_head bet_foot haveBet 加入对象
+        this.commitLoading = true;
         const horseInfoArr = this.formData.raceData.filter(item => item.bet_head || item.bet_foot);
         const bet_info = horseInfoArr.map(item => ({
           horse_id: item.horse_id,
@@ -91,9 +110,14 @@
           race_id: this.raceId,
         };
         this.$axios.post('/api/front/race/bet', params).then(res => {
-          console.log(res);
-          //todo 需要传递一个id
-          this.$router.push({name: 'betDetail', params: { id: '1' }})
+          this.$handleResponse(res.data.status, res.data.msg, () => {
+            //todo 需要传递一个id
+            this.$router.push({name: 'betDetail', params: { id: '1' }});
+          });
+          this.commitLoading = false;
+        }).catch(err => {
+          console.log(err);
+          this.commitLoading = false;
         });
       },
     }

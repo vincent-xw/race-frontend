@@ -31,6 +31,7 @@
                     el-button(
                     type='primary',
                     @click='changePwd'
+                    :loading="updateLoading"
                     ) 修改
         el-col(
         :span='24',
@@ -43,7 +44,8 @@
   export default {
     data() {
       return {
-        form: {}
+        form: {},
+        updateLoading: false,
       };
     },
     methods: {
@@ -52,8 +54,17 @@
           oldPassword: this.form.oldPwd,
           newPassword: this.form.newPwd
         };
+        this.updateLoading = true;
         this.$axios.post('/api/front/resetpwd', data).then(res => {
-          this.$router.go(-1);
+          this.$handleResponse(res.data.status, res.data.msg, () => {
+            this.tableData = res.data.data.bet_list.map(item => {
+              this.$router.go(-1);
+            });
+          });
+          this.updateLoading = false;
+        }).catch(err => {
+          console.log(err);
+          this.updateLoading = false;
         });
       }
     }
