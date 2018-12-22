@@ -36,7 +36,7 @@
         raceData: [],
         leagueName: '',
         leagueId: '',
-        now: new Date().toLocaleDateString()
+        now: new Date().toLocaleDateString(),
         loading: false,
       };
     },
