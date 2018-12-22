@@ -20,7 +20,7 @@
                     span 马匹: {{item.horse_name || 'horse001'}}
                     span 头: {{item.bet_head || 0}}
                     span 脚: {{item.bet_foot || 0}}
-                    span 成绩: {{item.raceScore || 1}}
+                    span 成绩: {{item.horse_score || 1}}
                     span 盈利: {{item.winNumber || 100}}
 
 </template>
@@ -35,6 +35,7 @@
         leagueName: '',
         raceId: '',
         raceStatus: 0,
+        playerWin: 0,
         loading: false,
       };
     },
@@ -49,9 +50,13 @@
         this.$handleResponse(res.data.status, res.data.msg, () => {
           //todo 需要传递一个id
           const { bet_detail = {}, bet_detail: { horse_info = [] } } = res.data.data;
-          this.raceData.betData = horse_info;
+          this.raceData.betData = horse_info.map(item => {
+            item.horse_score = +item.horse_score / 10;
+            return item;
+          });
           this.leagueName = bet_detail.league_name;
           this.raceTime = new Date(+bet_detail.race_time).toLocaleDateString();
+          this.playerWin = +bet_detail.player_win / 10;
         });
         this.loading = false;
       }).catch(err => {
@@ -63,7 +68,7 @@
       getRaceStatus() {
         let status = {
           0: '未开始',
-          1: '已结束'
+          1: '已结束',
         };
         return status[this.raceStatus] || '状态未知';
       }

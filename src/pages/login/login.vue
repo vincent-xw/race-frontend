@@ -14,13 +14,15 @@
             el-form(
             ref='form',
             v-model='form'
+            :rules='rules'
+            class="demo-ruleForm"
             )
-                el-form-item()
+                el-form-item(props="username")
                     el-input(
                     v-model='form.username',
                     placeholder='请输入用户名'
                     )
-                el-form-item()
+                el-form-item(props="password")
                     el-input(
                     v-model='form.password',
                     placeholder='请输入密码',
@@ -43,8 +45,15 @@
   export default {
     data() {
       return {
-        form: {},
+        form: {
+          username: '',
+          password: '',
+        },
         loading: false,
+        rules: {
+          username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+          password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        }
       };
     },
     computed: {

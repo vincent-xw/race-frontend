@@ -39,6 +39,7 @@
                                 el-input(
                                 v-model="item.bet_head"
                                 :placeholder="item.head_limit"
+                                type="number"
                                 )
                         el-row()
                             el-col(:span="6")
@@ -47,6 +48,7 @@
                                 el-input(
                                 v-model="item.bet_foot"
                                 :placeholder="item.head_limit"
+                                type="number"
                                 )
         el-button(
         @click="doBet"
@@ -98,13 +100,17 @@
        * 提交投注
        * */
       doBet() {
-        this.commitLoading = true;
-        const horseInfoArr = this.formData.raceData.filter(item => item.bet_head || item.bet_foot);
+        const horseInfoArr = this.formData.raceData.filter(item => item.bet_head && item.bet_head < item.head_limit
+            || item.bet_foot && item.bet_foot < item.foot_limit);
         const bet_info = horseInfoArr.map(item => ({
           horse_id: item.horse_id,
           bet_head: item.bet_head,
           bet_foot: item.bet_foot,
         }));
+        if (bet_info && bet_info.length === 0 || this.raceId === '' && !this.raceId) {
+            return;
+        }
+        this.commitLoading = true;
         const params = {
           bet_info,
           race_id: this.raceId,
