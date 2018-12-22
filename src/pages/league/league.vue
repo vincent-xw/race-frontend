@@ -30,15 +30,18 @@
        * 跳转赛事
        * */
       jumpRace(leagueName, leagueId) {
-        this.$router.push({name: 'race', params: {leagueName: leagueName, leagueId: leagueId}})
+        if (leagueName && typeof (leagueId) !== undefined) {
+          this.$router.push({name: 'race', params: {leagueName: leagueName, leagueId: leagueId}})
+          localStorage.setItem('leagueName', leagueName);
+        }
       }
-
     },
     created() {
       this.loading = true;
       this.$axios.get('/api/front/league/list').then(res => {
         this.$handleResponse(res.data.status, res.data.msg, () => {
           this.leagues = res.data.data.league_list;
+          console.log(this.leagues);
         });
         this.loading = false;
       }).catch(err => {

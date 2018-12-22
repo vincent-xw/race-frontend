@@ -7,7 +7,7 @@
                 el-col(
                 :span='8',
                 align='right',
-                @click="gotoPersonal"
+                @click="goPersonal"
                 )
                     p(
                     @click="goPersonal"

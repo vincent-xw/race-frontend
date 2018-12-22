@@ -60,24 +60,24 @@ export default [
         "data": {
           "league_list": [
             {
-              id: 0,
-              name: '马来西亚',
-              remark: '超高赔率，超多机会'
+              league_id: 0,
+              league_name: '马来西亚',
+              league_remark: '超高赔率，超多机会'
             },
             {
-              id: 1,
-              name: '澳大利亚',
-              remark: '超高赔率，超多机会'
+              league_id: 1,
+              league_name: '澳大利亚',
+              league_remark: '超高赔率，超多机会'
             },
             {
-              id: 2,
-              name: '香港',
-              remark: '超高赔率，超多机会'
+              league_id: 2,
+              league_name: '香港',
+              league_remark: '超高赔率，超多机会'
             },
             {
-              id: 3,
-              name: '新加坡',
-              remark: '超高赔率，超多机会'
+              league_id: 3,
+              league_name: '新加坡',
+              league_remark: '超高赔率，超多机会'
             }
           ]
         }
