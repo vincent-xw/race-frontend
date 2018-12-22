@@ -54,7 +54,7 @@
 
         return dataArr.map(item => {
           item.race_name = `${name}${item.race_id}`;
-          item.race_time = new Date(item.race_time).toLocaleString();
+          item.race_time = new Date(+item.race_time).toLocaleString();
           return item;
         });
       },
@@ -71,7 +71,7 @@
         return;
       }
       this.loading = true;
-      const name = this.$route.params.leagueName;
+      const name = this.$route.params.leagueName || localStorage.getItem('leagueName');
       const id = this.$route.params.leagueId;
       this.leagueName = name;
       this.leagueId = id;
