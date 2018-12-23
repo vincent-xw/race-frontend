@@ -27,27 +27,24 @@
                     :md='12',
                     :body-style={padding: '10px'}
                     )
-                        el-row()
-                            el-col(:span="6")
+                            el-col(:span="2")
                                 span() 马匹
-                            el-col(:span="18")
-                                span() {{item.horse_name}}
-                        el-row()
                             el-col(:span="6")
+                                span() {{item.horse_name}}
+                            el-col(:span="2")
                                 span() 头
-                            el-col(:span="18")
+                            el-col(:span="6")
                                 el-input(
                                 v-model="item.bet_head"
                                 :placeholder="item.head_limit"
                                 type="number"
                                 )
-                        el-row()
-                            el-col(:span="6")
+                            el-col(:span="2")
                                 span() 脚
-                            el-col(:span="18")
+                            el-col(:span="6")
                                 el-input(
                                 v-model="item.bet_foot"
-                                :placeholder="item.head_limit"
+                                :placeholder="item.foot_limit"
                                 type="number"
                                 )
         el-button(
@@ -75,17 +72,20 @@
       }
       this.raceId = this.$route.params.id;
       this.leagueName = this.$route.params.leagueName;
-      this.getRaceDetail()
+      this.getRaceDetail();
     },
     methods: {
       getRaceDetail() {
-        this.$axios.get('/api/front/race/info').then(res => {
+
+        this.$axios.get('/api/front/race/info' + '?' + this.$qs.stringify({
+            race_id: this.raceId
+        })).then(res => {
           console.log('res: ', res);
           this.$handleResponse(res.data.status, res.data.msg, () => {
             const raceInfo = res.data.data.race_info;
             this.formData.raceData = raceInfo.horseInfo.map(item => {
-              item.foot_limit = `脚限额${item.foot_limit}`;
-              item.head_limit = `头限额${item.head_limit}`;
+              item.foot_limit = `限额${item.foot_limit}`;
+              item.head_limit = `限额${item.head_limit}`;
               return item;
             });
             this.raceId = raceInfo.league_id;

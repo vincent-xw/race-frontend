@@ -56,39 +56,6 @@
         :span="24"
         :md="8"
         )
-            el-col(
-            :span="6"
-            )
-                span(
-                ) 比赛时间
-            el-col(
-            :span="18"
-            )
-                el-date-picker(
-                v-model="raceStartTime"
-                type="date"
-                placeholder="选择比赛开始日期"
-                )
-        el-col(
-        :span="24"
-          :md="8"
-        )
-            el-col(
-            :span="6"
-            )
-            el-col(
-            :span="18"
-            :offset=6
-            )
-                el-date-picker(
-                v-model="raceEndTime"
-                type="date"
-                placeholder="选择比赛结束日期"
-                )
-        el-col(
-        :span="24"
-        :md="8"
-        )
             el-button(
             type='primary'
             @click="search"
@@ -118,6 +85,10 @@
                 prop="lottery_time"
                 label="开奖时间"
                 )
+            el-pagination(
+                layout="prev, pager, next"
+                :total="50"
+            )
         el-button(
         @click="logout"
         ) 退出登录
@@ -166,32 +137,23 @@
        * 搜索记录
        * */
       search() {
-        let params = {};
+        let params = {
+            page_no: 1
+        };
         if (this.checkTime(this.betStartTime, this.betEndTime)) { // 如果合法 添加参数
           params = {
             ...params,
             bet_start_time: this.betStartTime.getTime(),
-            bet_end_time: this.betEndTime.getTime(),
+            bet_end_time: this.betEndTime.getTime()
           }
-        }
-        if (this.checkTime(this.raceStartTime, this.raceEndTime)) { // 如果合法 添加参数
-          params = {
-            ...params,
-            race_start_time: this.raceStartTime.getTime(),
-            race_end_time: this.raceEndTime.getTime(),
-          }
-        }
-        if (Object.keys(params).length <= 0) { //如果 params 键为0 代表 选择时间都不合法， 则返回
-          console.log('填写填写有误');
-          return;
         }
         this.searchLoading = true;
-        this.$axios.post('/api/front/race/bet/history', params).then(res => {
+        this.$axios.get('/api/front/race/bet/list' + '?' + this.$qs.stringify(params)).then(res => {
           this.$handleResponse(res.data.status, res.data.msg, () => {
             this.tableData = res.data.data.bet_list.map(item => {
-              item.bet_time = new Date(+item.bet_time).toLocaleDateString();
-              item.lottery_time = new Date(+item.lottery_time).toLocaleDateString();
-              return item;
+                item.bet_time = new Date(+item.bet_time).toLocaleDateString();
+                item.lottery_time = new Date(+item.lottery_time).toLocaleDateString();
+                return item;
             });
           });
           this.searchLoading = false;

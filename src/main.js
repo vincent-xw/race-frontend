@@ -10,7 +10,7 @@ import states from './config/state';
 import axiosConfig from './config/axios';
 import mock from './mock/mock.config.js';
 // 加载mock功能,此功能在正式环境不会使用届时会移除
-mock.init();
+// mock.init();
 
 Vue.use(Vuex);
 Vue.config.productionTip = false;
