@@ -156,8 +156,8 @@
                 item.bet_time = new Date(+item.bet_time).toLocaleDateString();
                 return item;
             });
-            this.pageCount = res.data.page_count;
-            this.pageNo = res.data.pane_no;
+            this.pageCount = res.data.data.page_count;
+            this.pageNo = res.data.data.pane_no;
           });
           this.searchLoading = false;
         }).catch(err => {
