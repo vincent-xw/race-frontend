@@ -84,7 +84,7 @@
             el-pagination(
                 layout="prev, pager, next",
                 align="center"
-                :total="pageSize"
+                :total="pageCount"
                 :current-page.sync="pageNo"
             )
         el-button(
@@ -102,7 +102,7 @@
         raceStartTime: '',
         raceEndTime: '',
         searchLoading: false,
-        pageSize: 0,
+        pageCount: 0,
         pageNo: 1
       };
     },
@@ -156,7 +156,7 @@
                 item.bet_time = new Date(+item.bet_time).toLocaleDateString();
                 return item;
             });
-            this.pageSize = res.data.page_size;
+            this.pageCount = res.data.page_count;
             this.pageNo = res.data.pane_no;
           });
           this.searchLoading = false;
