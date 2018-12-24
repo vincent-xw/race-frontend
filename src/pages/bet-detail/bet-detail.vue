@@ -45,9 +45,8 @@
       }
       this.loading = true;
       this.raceId = this.$route.params.id;
-      //todo 测试使用固定id
-//      const params = { bet_id: this.raceId };
-      const params = { bet_id: 1545329623483 };
+      const params = { bet_id: this.raceId };
+//      const params = { bet_id: 1545329623483 };
       this.$axios.post('/api/front/race/bet/detail', params).then(res => {
         this.$handleResponse(res.data.status, res.data.msg, () => {
           //todo 需要传递一个id
