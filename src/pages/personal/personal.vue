@@ -110,6 +110,8 @@
       logout() {
         this.$axios.get('/api/front/logout').then(res => {
           this.$handleResponse(res.data.status, res.data.msg, () => {
+            localStorage.setItem('user', '');
+            localStorage.setItem('userName', '');
             this.$router.replace({name: 'login'})
           });
           console.log(res);

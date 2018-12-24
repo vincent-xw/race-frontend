@@ -50,13 +50,15 @@
       /**
        * 获取赛事名称
        * */
-      initRaceData(name, dataArr = []) {
-
-        return dataArr.map(item => {
-          item.race_name = `${name}${item.race_id}`;
-          item.race_time = new Date(+item.race_time).toLocaleString();
-          return item;
-        });
+      initRaceData(name, data = {}) {
+        if (data instanceof Array) {
+          return data.map(item => {
+            item.race_time = new Date(+item.race_time).toLocaleString();
+            return item;
+          });
+        }
+        data.race_time = new Date(+data.race_time).toLocaleString();
+        return [data];
       },
       /**
        * 更换赛区
