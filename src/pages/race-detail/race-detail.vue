@@ -76,10 +76,10 @@
     },
     methods: {
       getRaceDetail() {
-
+        this.loading = true;
         this.$axios.get('/api/front/race/info' + '?' + this.$qs.stringify({
-            race_id: this.raceId
-        })).then(res => {
+            race_id: this.raceId,
+          })).then(res => {
           console.log('res: ', res);
           this.$handleResponse(res.data.status, res.data.msg, () => {
             const raceInfo = res.data.data.race_info;
@@ -88,7 +88,7 @@
               item.head_limit = `限额${item.head_limit}`;
               return item;
             });
-            this.raceId = raceInfo.league_id;
+//            this.raceId = raceInfo.league_id;
           });
           this.loading = false;
         }).catch(err => {
@@ -111,10 +111,18 @@
             return;
         }
         this.commitLoading = true;
+        let agent_id = undefined;
+        try {
+          agent_id = JSON.parse(localStorage.getItem('user')).id;
+        } catch (err) {
+          console.log(err);
+        }
         const params = {
           bet_info,
           race_id: this.raceId,
+          agent_id
         };
+        console.log(JSON.stringify(params));
         this.$axios.post('/api/front/race/bet', params).then(res => {
           this.$handleResponse(res.data.status, res.data.msg, () => {
             //todo 需要传递一个id

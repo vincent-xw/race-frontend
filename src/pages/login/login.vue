@@ -91,6 +91,7 @@
         this.$axios.post('/api/front/login', data).then(res => {
           this.$handleResponse(res.data.status, res.data.msg, () => {
             localStorage.setItem('userName', form.username);
+            localStorage.setItem('user', JSON.stringify(res.data.data));
             this.$store.commit('updateUserName', {
               userName: form.username,
             });
