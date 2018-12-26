@@ -81,13 +81,11 @@
                 prop="bet_time"
                 label="投注时间"
                 )
-                el-table-column(
-                prop="lottery_time"
-                label="开奖时间"
-                )
             el-pagination(
-                layout="prev, pager, next"
-                :total="50"
+                layout="prev, pager, next",
+                align="center"
+                :total="pageCount"
+                :current-page.sync="pageNo"
             )
         el-button(
         @click="logout"
@@ -104,6 +102,8 @@
         raceStartTime: '',
         raceEndTime: '',
         searchLoading: false,
+        pageCount: 0,
+        pageNo: 1
       };
     },
     methods: {
@@ -154,9 +154,10 @@
           this.$handleResponse(res.data.status, res.data.msg, () => {
             this.tableData = res.data.data.bet_list.map(item => {
                 item.bet_time = new Date(+item.bet_time).toLocaleDateString();
-                item.lottery_time = new Date(+item.lottery_time).toLocaleDateString();
                 return item;
             });
+            this.pageCount = res.data.data.page_count;
+            this.pageNo = res.data.data.pane_no;
           });
           this.searchLoading = false;
         }).catch(err => {

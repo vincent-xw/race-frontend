@@ -22,12 +22,12 @@ export default [{
     component: race
   },
   {
-    path: '/race/:leagueName/:id',
+    path: '/race-detail/:leagueName/:id',
     name: 'raceDetail',
     component: raceDetail
   },
   {
-    path: '/race/:id/bet-detail',
+    path: '/bet-detail/:id/bet-detail',
     name: 'betDetail',
     component: betDetail
   },
