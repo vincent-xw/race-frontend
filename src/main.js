@@ -41,7 +41,7 @@ let store = new Vuex.Store(states);
 
 axiosConfig();
 
-let vm = new Vue({
+window.vm = new Vue({
   store,
   router,
   render: h => h(App)
