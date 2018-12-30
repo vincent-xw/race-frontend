@@ -39,10 +39,10 @@ Vue.prototype.$handleResponse = function(status, msg,callback) {
 };
 let store = new Vuex.Store(states);
 
+axiosConfig();
+
 let vm = new Vue({
   store,
   router,
   render: h => h(App)
 }).$mount('#app');
-
-axiosConfig(vm);
