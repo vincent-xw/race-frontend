@@ -27,7 +27,7 @@ export default [{
     component: raceDetail
   },
   {
-    path: '/bet-detail/:id/bet-detail',
+    path: '/bet-detail/:id',
     name: 'betDetail',
     component: betDetail
   },
