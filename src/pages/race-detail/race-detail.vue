@@ -122,11 +122,10 @@
           race_id: this.raceId,
           agent_id
         };
-        console.log(JSON.stringify(params));
         this.$axios.post('/api/front/race/bet', params).then(res => {
           this.$handleResponse(res.data.status, res.data.msg, () => {
             //todo 需要传递一个id
-            this.$router.push({name: 'betDetail', params: { id: '1' }});
+            this.$router.push({name: 'betDetail', params: { id: res.data.data.bet_id }});
           });
           this.commitLoading = false;
         }).catch(err => {

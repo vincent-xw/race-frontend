@@ -62,6 +62,10 @@
       ])
     },
     created() {
+        let {needLogin} = this.$route.query;
+        if (+needLogin === 1) {
+            this.$message.error('登录状态已过期，您需要重新登录继续操作');
+        }
     },
     mounted() {
       this.$store.commit('updateIsLogin', {

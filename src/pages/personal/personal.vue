@@ -118,7 +118,6 @@
         })
       },
       rwoClick(row) {
-        console.log(row);
         this.$router.push({name: 'betDetail', params: {id: row.bet_id, leagueName: ''}})
       },
       /**
@@ -129,7 +128,7 @@
        * */
       checkTime(start, end) {
         if (start && end && start.getTime && end.getTime) {
-          if (end.getTime() > start.getTime()) {
+          if (end.getTime() >= start.getTime()) {
             return true;
           }
         }
@@ -140,7 +139,7 @@
        * */
       search() {
         let params = {
-            page_no: 1
+            page_no: this.pageNo
         };
         if (this.checkTime(this.betStartTime, this.betEndTime)) { // 如果合法 添加参数
           params = {

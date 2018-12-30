@@ -20,8 +20,8 @@
                     span 马匹: {{item.horse_name}}
                     span 头: {{item.bet_head || 0}}
                     span 脚: {{item.bet_foot || 0}}
-                    span 成绩: {{item.horse_score || ' '}}
-                    span 盈利: {{item.win_count / 10}}
+                    span 成绩: {{item.horse_score || '暂无'}}
+                    span 盈利: {{item.win_count / 10 || '暂无'}}
 
 </template>
 <script>
@@ -49,8 +49,6 @@
 //      const params = { bet_id: 1545329623483 };
       this.$axios.post('/api/front/race/bet/detail', params).then(res => {
         this.$handleResponse(res.data.status, res.data.msg, () => {
-          //todo 需要传递一个id
-          console.log(res.data);
           const { bet_detail = {}} = res.data.data;
           if (bet_detail instanceof Array) {
             this.raceData.betData = bet_detail.map(item => {
@@ -58,11 +56,13 @@
               return item;
             });
             this.leagueName = bet_detail[0].league_name;
-            this.raceTime = new Date(+bet_detail[0].race_time).toLocaleDateString();
+            this.raceTime = new Date(+bet_detail[0].race_info.race_time).toLocaleDateString();
+            this.raceStatus = +bet_detail[0].race_info.race_status;
           } else {
             this.raceData.betData = [bet_detail];
             this.leagueName = bet_detail.league_name;
-            this.raceTime = new Date(+bet_detail.race_time).toLocaleDateString();
+            this.raceTime = new Date(+bet_detail.race_info.race_time).toLocaleDateString();
+            this.raceStatus = +bet_detail.race_info.race_status;
           }
 //          this.playerWin = +bet_detail.player_win / 10;
         });
@@ -75,8 +75,10 @@
     computed: {
       getRaceStatus() {
         let status = {
-          0: '未开始',
-          1: '已结束',
+          1: '已发布',
+          2: '已结束',
+          3: '已结束',
+          4: '已结束'
         };
         return status[this.raceStatus] || '状态未知';
       }
