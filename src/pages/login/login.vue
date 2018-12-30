@@ -13,16 +13,16 @@
             h3.login-form-title 欢迎使用在线投注系统
             el-form(
             ref='form',
-            v-model='form'
+            :model='form',
             :rules='rules'
             class="demo-ruleForm"
             )
-                el-form-item(props="username")
+                el-form-item(prop="username")
                     el-input(
                     v-model='form.username',
                     placeholder='请输入用户名'
                     )
-                el-form-item(props="password")
+                el-form-item(prop="password")
                     el-input(
                     v-model='form.password',
                     placeholder='请输入密码',
@@ -31,7 +31,7 @@
                 el-form-item(align='center')
                     el-button(
                     type='primary',
-                    @click='login'
+                    @click='login("form")',
                     :loading="loading"
                     ) 登录
         el-col(
@@ -81,30 +81,34 @@
       });
     },
     methods: {
-      login() {
-        const form = this.form;
-        if (!form.username || !form.password) {
-          return;
-        }
-        let data = {
-          username: form.username,
-          password: form.password,
-          loading: false,
-        };
-        this.loading = true;
-        this.$axios.post('/api/front/login', data).then(res => {
-          this.$handleResponse(res.data.status, res.data.msg, () => {
-            localStorage.setItem('userName', form.username);
-            localStorage.setItem('user', JSON.stringify(res.data.data));
-            this.$store.commit('updateUserName', {
-              userName: form.username,
+      login(formName) {
+
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            const form = this.form;
+            let data = {
+              username: form.username,
+              password: form.password,
+              loading: false,
+            };
+            this.loading = true;
+            this.$axios.post('/api/front/login', data).then(res => {
+              this.$handleResponse(res.data.status, res.data.msg, () => {
+                localStorage.setItem('userName', form.username);
+                localStorage.setItem('user', JSON.stringify(res.data.data));
+                this.$store.commit('updateUserName', {
+                  userName: form.username,
+                });
+                this.$router.push('league');
+              });
+              this.loading = false;
+            }).catch(err => {
+              console.log(err);
+              this.loading = false;
             });
-            this.$router.push('league');
-          });
-          this.loading = false;
-        }).catch(err => {
-          console.log(err);
-          this.loading = false;
+          } else {
+            return false;
+          }
         });
       }
     },
