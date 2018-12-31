@@ -35,21 +35,22 @@
                                 span() 头
                             el-col(:span="6")
                                 el-input(
-                                v-model="item.bet_head"
-                                :placeholder="item.head_limit"
+                                v-model="item.bet_head",
+                                :placeholder="item.head_limit",
                                 type="number"
                                 )
                             el-col(:span="2")
                                 span() 脚
                             el-col(:span="6")
                                 el-input(
-                                v-model="item.bet_foot"
-                                :placeholder="item.foot_limit"
+                                v-model="item.bet_foot",
+                                :placeholder="item.foot_limit",
                                 type="number"
                                 )
         el-button(
         @click="doBet"
         type='primary'
+        v-show='showButton'
         :loading="commitLoading"
         ) 提交
 </template>
@@ -64,6 +65,7 @@
         leagueName: '',
         loading: false,
         commitLoading: false,
+        showButton: false,
       };
     },
     created() {
@@ -77,6 +79,7 @@
     methods: {
       getRaceDetail() {
         this.loading = true;
+        this.showButton = false;
         this.$axios.get('/api/front/race/info' + '?' + this.$qs.stringify({
             race_id: this.raceId,
           })).then(res => {
@@ -89,6 +92,7 @@
               return item;
             });
 //            this.raceId = raceInfo.league_id;
+            this.showButton = true
           });
           this.loading = false;
         }).catch(err => {
@@ -124,7 +128,6 @@
         };
         this.$axios.post('/api/front/race/bet', params).then(res => {
           this.$handleResponse(res.data.status, res.data.msg, () => {
-            //todo 需要传递一个id
             this.$router.push({name: 'betDetail', params: { id: res.data.data.bet_id }});
           });
           this.commitLoading = false;
