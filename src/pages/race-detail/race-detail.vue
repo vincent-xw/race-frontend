@@ -36,7 +36,7 @@
                             el-col(:span="6")
                                 el-input(
                                 v-model="item.bet_head",
-                                :placeholder="item.head_limit",
+                                :placeholder="item.head_left_limit",
                                 type="number"
                                 )
                             el-col(:span="2")
@@ -44,7 +44,7 @@
                             el-col(:span="6")
                                 el-input(
                                 v-model="item.bet_foot",
-                                :placeholder="item.foot_limit",
+                                :placeholder="item.foot_left_limit",
                                 type="number"
                                 )
         el-button(
@@ -87,8 +87,8 @@
           this.$handleResponse(res.data.status, res.data.msg, () => {
             const raceInfo = res.data.data.race_info;
             this.formData.raceData = raceInfo.horseInfo.map(item => {
-              item.foot_limit = `限额${item.foot_limit}`;
-              item.head_limit = `限额${item.head_limit}`;
+              item.foot_left_limit = `限额${item.foot_left_limit}`;
+              item.head_left_limit = `限额${item.head_left_limit}`;
               return item;
             });
 //            this.raceId = raceInfo.league_id;
@@ -104,8 +104,8 @@
        * 提交投注
        * */
       doBet() {
-        const horseInfoArr = this.formData.raceData.filter(item => item.bet_head && item.bet_head < item.head_limit
-            || item.bet_foot && item.bet_foot < item.foot_limit);
+        const horseInfoArr = this.formData.raceData.filter(item => item.bet_head && item.bet_head < item.head_left_limit
+            || item.bet_foot && item.bet_foot < item.foot_left_limit);
         const bet_info = horseInfoArr.map(item => ({
           horse_id: item.horse_id,
           bet_head: item.bet_head,
