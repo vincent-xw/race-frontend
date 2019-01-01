@@ -3,7 +3,7 @@
         el-header.header-nav
             el-row
                 el-col(:span='16')
-                    p 欢迎使用在线投注系统
+                    p(@click='gotohome') 欢迎使用在线投注系统
                 el-col(
                 :span='8',
                 align='right'
@@ -43,6 +43,11 @@
     methods: {
       goPersonal() {
         this.$router.push({ name: 'personal' })
+      },
+      gotohome() {
+          this.$router.push({
+              name: 'league'
+          });
       }
     }
   };

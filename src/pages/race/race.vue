@@ -13,8 +13,8 @@
         el-col(:span='24')
             h3 请选择比赛然后进行投注-{{now}}
             el-table(
-            :data='raceData'
-              @row-click='chooseRace'
+                :data='raceData'
+                @row-click='chooseRace'
             )
                 el-table-column(
                 prop='race_id',
