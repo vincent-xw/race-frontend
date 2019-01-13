@@ -16,7 +16,7 @@
             el-col(
             :span="6"
             )
-                span.change-password(
+                h3.change-password(
                 @click="changePwd"
                 ) 修改密码
         el-col(
@@ -180,8 +180,9 @@
 <style lang="less">
     .change-password {
         color: #368EFF;
+        font-weight: initial;
     };
     .table {
-      margin-top: 40px;
+        margin-top: 40px;
     };
 </style>
