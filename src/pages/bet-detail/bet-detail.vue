@@ -17,11 +17,11 @@
             p 当前比赛编号{{raceId}} 时间{{raceTime}} {{getRaceStatus}}
             .bet-list
                 el-card(v-for="item in raceData.betData" :body-style={padding: '10px'} :key="item.id" )
-                    span 马匹: {{item.horse_name}}
-                    span 头: {{item.bet_head || 0}}
-                    span 脚: {{item.bet_foot || 0}}
-                    span 成绩: {{item.horse_score || '暂无'}}
-                    span 盈利: {{item.win_count / 10 || '暂无'}}
+                    span 马匹: {{item.horse_name}} 
+                    span 头: {{item.bet_head || 0}} 
+                    span 脚: {{item.bet_foot || 0}} 
+                    span 成绩: {{item.horse_score || '暂无'}} 
+                    span 盈利: {{item.win_count / 10 || '暂无'}} 
 
 </template>
 <script>
