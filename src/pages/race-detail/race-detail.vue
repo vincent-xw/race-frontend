@@ -62,6 +62,7 @@
           raceData: [],
         },
         raceId: '',
+        league_id: '',
         leagueName: '',
         loading: false,
         commitLoading: false,
@@ -83,7 +84,6 @@
         this.$axios.get('/api/front/race/info' + '?' + this.$qs.stringify({
             race_id: this.raceId,
           })).then(res => {
-          console.log('res: ', res);
           this.$handleResponse(res.data.status, res.data.msg, () => {
             const raceInfo = res.data.data.race_info;
             this.formData.raceData = raceInfo.horseInfo.map(item => {
@@ -91,10 +91,11 @@
               item.head_left_limit = `限额${item.head_left_limit}`;
               return item;
             });
-//            this.raceId = raceInfo.league_id;
+            this.league_id = res.data.data.race_info.league_id;
             this.showButton = true
           });
           this.loading = false;
+          
         }).catch(err => {
           console.log(err);
           this.loading = false;
@@ -124,6 +125,7 @@
         const params = {
           bet_info,
           race_id: this.raceId,
+          league_id: this.league_id,
           agent_id
         };
         this.$axios.post('/api/front/race/bet', params).then(res => {
