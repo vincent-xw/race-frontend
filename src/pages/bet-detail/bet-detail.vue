@@ -15,6 +15,8 @@
                 |当前比赛编号:{{raceId}} 
                 br 
                 |比赛名称:{{raceName}}
+                br
+                |比赛场次:{{raceOrder || ''}}
                 br 
                 |时间:{{raceTime}}
                 br
@@ -38,6 +40,7 @@
         },
         raceTime: '',
         raceName: '',
+        raceOrder: '',
         raceId: '',
         raceStatus: 0,
 //        playerWin: 0,
@@ -63,11 +66,13 @@
             this.raceTime = new Date(+race_info.race_time).toLocaleDateString();
             this.raceStatus = +race_info.race_status;
             this.raceName = race_info.race_name;
+            this.raceOrder = race_info.race_order;
           } else {
             this.raceData.betData = [bet_detail];
             this.raceTime = new Date(+race_info.race_time).toLocaleDateString();
             this.raceStatus = +race_info.race_status;
             this.raceName = race_info.race_name;
+            this.raceOrder = race_info.race_order;
           }
 //          this.playerWin = +bet_detail.player_win / 10;
         });

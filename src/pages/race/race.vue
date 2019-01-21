@@ -25,6 +25,10 @@
                 label='比赛名称'
                 )
                 el-table-column(
+                prop='race_order',
+                label='比赛场次'
+                )
+                el-table-column(
                 prop='race_time',
                 label='比赛时间'
                 )
