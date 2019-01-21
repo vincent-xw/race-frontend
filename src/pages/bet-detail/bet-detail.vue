@@ -4,9 +4,6 @@
             el-breadcrumb(separator='/')
                 el-breadcrumb-item(
                 :to='{path: ' / ' }'
-                ) {{leagueName}}
-                el-breadcrumb-item(
-                :to='{path: ' / ' }'
                 ) {{raceTime}}比赛编号{{raceId}}
                 el-breadcrumb-item(
                 :to='{path: ' / ' }'
@@ -14,7 +11,15 @@
         el-col(:span='24')
             h3 比赛信息
                 el-button(type='text', size='mini' @click="print") 打印详单
-            p 当前比赛编号{{raceId}} 时间{{raceTime}} {{getRaceStatus}}
+            p 
+                |当前比赛编号:{{raceId}} 
+                br 
+                |比赛名称:{{raceName}}
+                br 
+                |时间:{{raceTime}}
+                br
+                |比赛状态:{{getRaceStatus}}
+
             .bet-list
                 el-card(v-for="item in raceData.betData" :body-style={padding: '10px'} :key="item.id" )
                     span 马匹: {{item.horse_name}} 
@@ -32,7 +37,7 @@
           betData: [{}]
         },
         raceTime: '',
-        leagueName: '',
+        raceName: '',
         raceId: '',
         raceStatus: 0,
 //        playerWin: 0,
@@ -49,20 +54,20 @@
 //      const params = { bet_id: 1545329623483 };
       this.$axios.post('/api/front/race/bet/detail', params).then(res => {
         this.$handleResponse(res.data.status, res.data.msg, () => {
-          const { bet_detail = {}} = res.data.data;
+          const { bet_detail = {}, race_info} = res.data.data;
           if (bet_detail instanceof Array) {
             this.raceData.betData = bet_detail.map(item => {
               item.horse_score = +item.horse_score / 10;
               return item;
             });
-            this.leagueName = bet_detail[0].league_name;
-            this.raceTime = new Date(+bet_detail[0].race_info.race_time).toLocaleDateString();
-            this.raceStatus = +bet_detail[0].race_info.race_status;
+            this.raceTime = new Date(+race_info.race_time).toLocaleDateString();
+            this.raceStatus = +race_info.race_status;
+            this.raceName = race_info.race_name;
           } else {
             this.raceData.betData = [bet_detail];
-            this.leagueName = bet_detail.league_name;
-            this.raceTime = new Date(+bet_detail.race_info.race_time).toLocaleDateString();
-            this.raceStatus = +bet_detail.race_info.race_status;
+            this.raceTime = new Date(+race_info.race_time).toLocaleDateString();
+            this.raceStatus = +race_info.race_status;
+            this.raceName = race_info.race_name;
           }
 //          this.playerWin = +bet_detail.player_win / 10;
         });
