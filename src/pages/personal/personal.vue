@@ -83,16 +83,16 @@
                 )
             el-pagination(
                 layout="prev, pager, next",
-                align="center"
-                :total="pageCount"
-                :current-page.sync="pageNo"
+                align="center",
+                :page-count="pageCount",
+                :current-page.sync="pageNo",
+                @current-change="search()"
             )
         el-button(
         @click="logout"
         ) 退出登录
 </template>
 <script>
-  // todo 响应式 布局 目前并没有适配
   export default {
     data() {
       return {
@@ -156,7 +156,7 @@
                 return item;
             });
             this.pageCount = res.data.data.page_count;
-            this.pageNo = res.data.data.pane_no;
+            this.pageNo = +res.data.data.page_no;
           });
           this.searchLoading = false;
         }).catch(err => {
