@@ -66,7 +66,7 @@
         leagueName: '',
         loading: false,
         commitLoading: false,
-        showButton: false,
+        showButton: false
       };
     },
     created() {

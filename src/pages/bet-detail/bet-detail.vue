@@ -20,6 +20,10 @@
                 br 
                 |时间:{{raceTime}}
                 br
+                |总投注:{{allCount}}
+                br
+                |总盈利:{{winCount}}
+                br
                 |比赛状态:{{getRaceStatus}}
 
             .bet-list
@@ -45,6 +49,8 @@
         raceStatus: 0,
 //        playerWin: 0,
         loading: false,
+        allCount: 0,
+        winCount: 0
       };
     },
     created() {
@@ -57,28 +63,31 @@
 //      const params = { bet_id: 1545329623483 };
       this.$axios.post('/api/front/race/bet/detail', params).then(res => {
         this.$handleResponse(res.data.status, res.data.msg, () => {
-          const { bet_detail = {}, race_info} = res.data.data;
-          if (bet_detail instanceof Array) {
-            this.raceData.betData = bet_detail.map(item => {
-              item.horse_score = +item.horse_score / 10;
-              return item;
-            });
-            this.raceTime = new Date(+race_info.race_time).toLocaleDateString();
-            this.raceStatus = +race_info.race_status;
-            this.raceName = race_info.race_name;
-            this.raceOrder = race_info.race_order;
-          } else {
-            this.raceData.betData = [bet_detail];
-            this.raceTime = new Date(+race_info.race_time).toLocaleDateString();
-            this.raceStatus = +race_info.race_status;
-            this.raceName = race_info.race_name;
-            this.raceOrder = race_info.race_order;
-          }
-//          this.playerWin = +bet_detail.player_win / 10;
+            const { bet_detail = {}, race_info} = res.data.data;
+                if (bet_detail instanceof Array) {
+                    this.raceData.betData = bet_detail.map(item => {
+                        item.horse_score = +item.horse_score / 10;
+                        this.allCount += item.all_count / 10;
+                        this.winCount += item.win_count / 10;
+                        return item;
+                    });
+                    this.raceTime = new Date(+race_info.race_time).toLocaleDateString();
+                    this.raceStatus = +race_info.race_status;
+                    this.raceName = race_info.race_name;
+                    this.raceOrder = race_info.race_order;
+                }
+                else {
+                    this.raceData.betData = [bet_detail];
+                    this.raceTime = new Date(+race_info.race_time).toLocaleDateString();
+                    this.raceStatus = +race_info.race_status;
+                    this.raceName = race_info.race_name;
+                    this.raceOrder = race_info.race_order;
+                    this.allCount += bet_detail.all_count / 10;
+                    this.winCount += bet_detail.win_count / 10;
+            }
         });
         this.loading = false;
       }).catch(err => {
-        console.log(err);
         this.loading = false;
       })
     },
